@@ -5,7 +5,9 @@ A super simple FastAPI application that allows students to view and sign up for 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Teachers can sign up and unregister students
+- Students can view activities and participants without signing in
+- Teacher login sessions protect registration changes
 
 ## Getting Started
 
@@ -21,6 +23,10 @@ A super simple FastAPI application that allows students to view and sign up for 
    python app.py
    ```
 
+The demo teacher account is `teacher` with password `mergington-teacher`. Set
+the `SESSION_SECRET` environment variable to a strong value outside local
+development.
+
 3. Open your browser and go to:
    - API documentation: http://localhost:8000/docs
    - Alternative documentation: http://localhost:8000/redoc
@@ -30,7 +36,11 @@ A super simple FastAPI application that allows students to view and sign up for 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/auth/login`                                                      | Log in as a teacher                                                 |
+| POST   | `/auth/logout`                                                     | Log out the current teacher                                         |
+| GET    | `/auth/me`                                                         | Get the current teacher session                                     |
+| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up a student (teacher only)                                    |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Unregister a student (teacher only)                              |
 
 ## Data Model
 
